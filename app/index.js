@@ -2,7 +2,7 @@ function sum(num) {
 
     let currentSum = 0;
     if (num === undefined) {
-        currentSum = 0;
+        return currentSum;
     } else if (typeof num === 'number') {
         currentSum = num;
     } else {
@@ -12,7 +12,7 @@ function sum(num) {
 
     function func(a) {
         if (a === undefined) {
-            a = 0;
+            return currentSum;
         }
         if (typeof a === 'number') {
             currentSum += a;
