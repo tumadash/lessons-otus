@@ -8,6 +8,18 @@ const tree = {
 const fragment = new DocumentFragment;
 
 function init(root) {
+    const style = document.createElement('style');
+    style.textContent = `my-tree {
+                           display: block;
+                           margin-left: 10px;
+                           color: red;
+                         }
+                         my-leaf {
+                          display: block;
+                          margin-left: 10px;
+                          color: blue;
+                          }`;
+    fragment.appendChild(style);
     createTree(tree, fragment);
     root.appendChild(fragment);
 }
@@ -15,14 +27,14 @@ function init(root) {
 function createTree(tree, parent) {
     if (tree.items) {
         let node = document.createElement('my-tree');
-        node.innerHTML = `<div>${tree.id}</div>`;
+        node.innerHTML = `<div> - ${tree.id}</div>`;
         parent.appendChild(node);
         for (let i = 0; i < tree.items.length; i++) {
             createTree(tree.items[i], node);
         }
     } else {
         let leaf = document.createElement('my-leaf');
-        leaf.innerHTML = `<div>${tree.id}</div>`;
+        leaf.innerHTML = `<div> - ${tree.id}</div>`;
         parent.appendChild(leaf);
     }
 }
@@ -40,6 +52,7 @@ class MyRoot extends HTMLElement {
     }
 
 }
+
 class MyTree extends HTMLElement {
     constructor() {
         super();
