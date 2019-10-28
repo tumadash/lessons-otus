@@ -1,0 +1,9 @@
+{
+  "name": "javascript-6",
+  "version": "1.0.0",
+  "main": "request.js",
+  "dependencies": {
+    "request": "^2.88.0",
+    "util": "^0.12.1"
+  }
+}
