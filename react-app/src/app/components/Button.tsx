@@ -1,12 +1,13 @@
 import * as React from "react";
 
 export interface ButtonProps {
-    submit: () => void
+    submit: () => void,
+    title: string
 }
 
 
-export class Button extends React.Component<ButtonProps,{}> {
+export class Button extends React.Component<ButtonProps, {}> {
     render() {
-        return <button className="btn btn-primary" onClick={this.props.submit}>Показать</button>
+        return <button className="btn btn-primary" onClick={this.props.submit}>{this.props.title}</button>
     }
 }
