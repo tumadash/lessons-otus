@@ -9,8 +9,8 @@ interface IProps {
 
 interface IState {
     city: string,
-    city1: string,
-    weather: any,
+    isShow: boolean,
+    weather: object,
     listFavourites: any
 }
 
@@ -19,7 +19,7 @@ export class App extends React.Component<IProps, IState> {
         super(props);
         this.state = {
             city: '',
-            city1: '',
+            isShow: false,
             weather: {},
             listFavourites: []
         };
@@ -28,7 +28,7 @@ export class App extends React.Component<IProps, IState> {
     componentDidMount() {
         this.setState({
             city: 'Нижний Новгород',
-            city1: 'Нижний Новгород',
+            isShow: true,
             weather: {temperature: '+25', humidity: '30%', precipitation: 'не ожидается'}
         })
     }
@@ -43,30 +43,34 @@ export class App extends React.Component<IProps, IState> {
                                                                                            title={"Показать"}/>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col  align-self-center"><Panel info={this.state.weather}
-                                                                       city={this.state.city}/></div>
-                    </div>
-                    <Button submit={this.addToFavourites.bind(this)} title={"Добавить в избранное"}/>
+                    {this.state.isShow && <div className="row">
+                        <div className="col align-self-center"><Panel info={this.state.weather}
+                                                                      city={this.state.city}/></div>
+                    </div>}
+                    <Button disabled={!this.state.city || this.state.listFavourites.includes(this.state.city)}
+                            submit={this.addToFavourites.bind(this)} title={"Добавить в избранное"}/>
                     <ListFavourites list={this.state.listFavourites}/>
                 </div>
             </div>
         </div>
     }
 
-    handleInputChange(city: any) {
-        this.setState({'city1': city});
+    handleInputChange(city: string) {
+        if (this.state.isShow) {
+            this.setState({'isShow': false});
+        }
+        this.setState({'city': city});
     }
 
     show() {
+        this.setState({'isShow': true});
         this.setState({'weather': {temperature: '+27', humidity: '80%', precipitation: 'не ожидается'}});
-        this.setState({'city': this.state.city1});
     }
 
     addToFavourites() {
         let listFavourites = this.state.listFavourites;
-        if (!listFavourites.includes(this.state.city1)) {
-            listFavourites.push(this.state.city1);
+        if (!listFavourites.includes(this.state.city)) {
+            listFavourites.push(this.state.city);
         }
         this.setState({'listFavourites': listFavourites});
     }
