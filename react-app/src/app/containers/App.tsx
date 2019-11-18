@@ -23,6 +23,8 @@ export class App extends React.Component<IProps, IState> {
             weather: {temperature: '', humidity: '', precipitation: ''},
             listFavourites: []
         };
+        this.addToFavourites = this.addToFavourites.bind(this);
+        this.show = this.show.bind(this);
     }
 
     componentDidMount() {
@@ -39,7 +41,7 @@ export class App extends React.Component<IProps, IState> {
                 <div className="col-12">
                     <div className="row">
                         <div className="col  align-self-center"><Input
-                            handleInputChange={this.handleInputChange.bind(this)}/><Button submit={this.show.bind(this)}
+                            handleInputChange={this.handleInputChange.bind(this)}/><Button submit={this.show}
                                                                                            title={"Показать"}/>
                         </div>
                     </div>
@@ -48,7 +50,7 @@ export class App extends React.Component<IProps, IState> {
                                                                       city={this.state.city}/></div>
                     </div>}
                     <Button disabled={!this.state.city || this.state.listFavourites.includes(this.state.city)}
-                            submit={this.addToFavourites.bind(this)} title={"Добавить в избранное"}/>
+                            submit={this.addToFavourites} title={"Добавить в избранное"}/>
                     <ListFavourites list={this.state.listFavourites}/>
                 </div>
             </div>

@@ -7,12 +7,7 @@ export interface ListFavouritesProps {
 export class ListFavourites extends React.Component<ListFavouritesProps, {}> {
     render() {
         return <ul style={{margin: '10pt'}} className="list-group">
-            {Object.entries(this.props.list).map(([key, value]) => this.renderInformation(key, value))}
+            {this.props.list.map(value => <li className="list-group-item" key={value}>{value}</li>)}
         </ul>
-    }
-    renderInformation(key:string, value:string) {
-        return (
-            <li className="list-group-item" key={key}>{value}</li>
-        );
     }
 }

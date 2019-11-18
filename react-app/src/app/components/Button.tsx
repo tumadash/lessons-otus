@@ -6,9 +6,5 @@ export interface ButtonProps {
     disabled?: boolean
 }
 
-
-export class Button extends React.Component<ButtonProps, {}> {
-    render() {
-        return <button disabled={this.props.disabled} className="btn btn-primary" onClick={this.props.submit}>{this.props.title}</button>
-    }
-}
+export const Button = ({submit, title, disabled}: ButtonProps) => (
+    <button disabled={disabled} className="btn btn-primary" onClick={submit}>{title}</button>);
