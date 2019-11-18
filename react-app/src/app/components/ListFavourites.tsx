@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export interface ListFavouritesProps {
-    list: []
+    list: string[]
 }
 
 export class ListFavourites extends React.Component<ListFavouritesProps, {}> {

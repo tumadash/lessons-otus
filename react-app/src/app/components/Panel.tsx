@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export interface PanelProps {
-    info: any,
+    info: { temperature: string, humidity: string, precipitation: string },
     city: string
 }
 

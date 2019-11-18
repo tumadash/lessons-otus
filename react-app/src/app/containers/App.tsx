@@ -10,8 +10,8 @@ interface IProps {
 interface IState {
     city: string,
     isShow: boolean,
-    weather: object,
-    listFavourites: any
+    weather: { temperature: string, humidity: string, precipitation: string },
+    listFavourites: string[]
 }
 
 export class App extends React.Component<IProps, IState> {
@@ -20,7 +20,7 @@ export class App extends React.Component<IProps, IState> {
         this.state = {
             city: '',
             isShow: false,
-            weather: {},
+            weather: {temperature: '', humidity: '', precipitation: ''},
             listFavourites: []
         };
     }
