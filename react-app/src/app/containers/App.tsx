@@ -14,30 +14,33 @@ interface AppProps {
     city: CityState;
 }
 
-// export type UpdateCityParam = React.SyntheticEvent<{ value: string }>;
-
-interface IState {
-    city: City,
-    isShow: boolean
-}
 
 class App extends React.Component<AppProps> {
     state = {
         city: {name: '', weather: {temperature: '', humidity: '', precipitation: ''}},
-        isShow: false
+        isShow: false,
+        currentCityOfList: ''
     };
-
 
     componentDidMount() {
         const city: City = {
             name: 'Нижний Новгород',
             weather: {temperature: '+25', humidity: '30%', precipitation: 'не ожидается'}
         };
-        this.setState({city: city});
+        this.setState({city: city, isShow: true});
     }
 
     addCity = () => {
         this.props.addCity(this.state.city);
+    };
+
+    setCurrentCity(city: City) {
+        this.setState({currentCityOfList: city.name})
+    }
+
+    deleteCity = () => {
+        this.props.deleteCity(this.state.currentCityOfList);
+        this.setState({currentCityOfList: ''});
     };
 
     render() {
@@ -54,9 +57,13 @@ class App extends React.Component<AppProps> {
                         <div className="col align-self-center"><Panel info={this.state.city.weather}
                                                                       nameCity={this.state.city.name}/></div>
                     </div>}
-                    <Button disabled={!this.state.city.name || (this.props.city.cities && this.props.city.cities.includes(this.state.city))}
-                    submit={this.addCity} title={"Добавить в избранное"}/>
-                    <ListFavourites cities={this.props.city.cities}/>
+                    <Button
+                        disabled={!this.state.city.name || (this.props.city.cities && this.props.city.cities.some(city => city.name === this.state.city.name))}
+                        submit={this.addCity} title={"Добавить в избранное"}/>
+                    <ListFavourites setCurrentCity={this.setCurrentCity.bind(this)} cities={this.props.city.cities}/>
+                    <Button
+                        disabled={!(this.state.currentCityOfList || (this.props.city.cities && this.props.city.cities.some(city => city.name === this.state.currentCityOfList)))}
+                        submit={this.deleteCity} title={"Удалить"}/>
                 </div>
             </div>
         </div>
@@ -68,19 +75,14 @@ class App extends React.Component<AppProps> {
         }
         const city: City = {
             name,
-            weather: {temperature: '', humidity: '', precipitation: ''}
+            weather: {temperature: '-3', humidity: '40%', precipitation: 'снег'}
         };
         this.setState({'city': city});
     }
 
-    show() {
-        const city: City = {
-            name: this.state.city.name,
-            weather: {temperature: '', humidity: '', precipitation: ''}
-        };
+    show = () => {
         this.setState({'isShow': true});
-        this.setState({city});
-    }
+    };
 
 }
 
