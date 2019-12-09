@@ -3,37 +3,45 @@ import {Input} from "../components/Input";
 import {Button} from "../components/Button";
 import {Panel} from "../components/Panel";
 import {ListFavourites} from "../components/ListFavourites";
+import {addCity, deleteCity} from "../../store/city/actions";
+import {City, CityState} from "../../store/city/types";
+import {AppState} from "../../store";
+import {connect} from "react-redux";
 
-interface IProps {
+interface AppProps {
+    addCity: typeof addCity;
+    deleteCity: typeof deleteCity;
+    city: CityState;
 }
 
-interface IState {
-    city: string,
-    isShow: boolean,
-    weather: { temperature: string, humidity: string, precipitation: string },
-    listFavourites: string[]
-}
 
-export class App extends React.Component<IProps, IState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            city: '',
-            isShow: false,
-            weather: {temperature: '', humidity: '', precipitation: ''},
-            listFavourites: []
-        };
-        this.addToFavourites = this.addToFavourites.bind(this);
-        this.show = this.show.bind(this);
-    }
+class App extends React.Component<AppProps> {
+    state = {
+        city: {name: '', weather: {temperature: '', humidity: '', precipitation: ''}},
+        isShow: false,
+        currentCityOfList: ''
+    };
 
     componentDidMount() {
-        this.setState({
-            city: 'Нижний Новгород',
-            isShow: true,
+        const city: City = {
+            name: 'Нижний Новгород',
             weather: {temperature: '+25', humidity: '30%', precipitation: 'не ожидается'}
-        })
+        };
+        this.setState({city: city, isShow: true});
     }
+
+    addCity = () => {
+        this.props.addCity(this.state.city);
+    };
+
+    setCurrentCity(city: City) {
+        this.setState({currentCityOfList: city.name})
+    }
+
+    deleteCity = () => {
+        this.props.deleteCity(this.state.currentCityOfList);
+        this.setState({currentCityOfList: ''});
+    };
 
     render() {
         return <div className="container-fluid  d-flex justify-content-center weather">
@@ -46,35 +54,43 @@ export class App extends React.Component<IProps, IState> {
                         </div>
                     </div>
                     {this.state.isShow && <div className="row">
-                        <div className="col align-self-center"><Panel info={this.state.weather}
-                                                                      city={this.state.city}/></div>
+                        <div className="col align-self-center"><Panel info={this.state.city.weather}
+                                                                      nameCity={this.state.city.name}/></div>
                     </div>}
-                    <Button disabled={!this.state.city || this.state.listFavourites.includes(this.state.city)}
-                            submit={this.addToFavourites} title={"Добавить в избранное"}/>
-                    <ListFavourites list={this.state.listFavourites}/>
+                    <Button
+                        disabled={!this.state.city.name || (this.props.city.cities && this.props.city.cities.some(city => city.name === this.state.city.name))}
+                        submit={this.addCity} title={"Добавить в избранное"}/>
+                    <ListFavourites setCurrentCity={this.setCurrentCity.bind(this)} cities={this.props.city.cities}/>
+                    <Button
+                        disabled={!(this.state.currentCityOfList || (this.props.city.cities && this.props.city.cities.some(city => city.name === this.state.currentCityOfList)))}
+                        submit={this.deleteCity} title={"Удалить"}/>
                 </div>
             </div>
         </div>
     }
 
-    handleInputChange(city: string) {
+    handleInputChange(name: string) {
         if (this.state.isShow) {
             this.setState({'isShow': false});
         }
+        const city: City = {
+            name,
+            weather: {temperature: '-3', humidity: '40%', precipitation: 'снег'}
+        };
         this.setState({'city': city});
     }
 
-    show() {
+    show = () => {
         this.setState({'isShow': true});
-        this.setState({'weather': {temperature: '+27', humidity: '80%', precipitation: 'не ожидается'}});
-    }
-
-    addToFavourites() {
-        let listFavourites = this.state.listFavourites;
-        if (!listFavourites.includes(this.state.city)) {
-            listFavourites.push(this.state.city);
-        }
-        this.setState({'listFavourites': listFavourites});
-    }
+    };
 
 }
+
+const mapStateToProps = (state: AppState) => ({
+    city: state.city
+});
+
+export default connect(
+    mapStateToProps,
+    {addCity, deleteCity}
+)(App);
