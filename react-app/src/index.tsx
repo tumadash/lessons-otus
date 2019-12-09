@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import {App} from "./app/components/App";
+import {App} from "./app/containers/App";
 import {render} from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css';
+import './scss/main.scss';
 
-render(<App message="Hello world!"/>, document.getElementById("example"));
+render(<App/>, document.getElementById("example"));
