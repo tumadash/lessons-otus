@@ -7,6 +7,7 @@ import {addCity, deleteCity} from "../../store/city/actions";
 import {City, CityState} from "../../store/city/types";
 import {AppState} from "../../store";
 import {connect} from "react-redux";
+import history from "../service/history";
 
 interface AppProps {
     addCity: typeof addCity;
@@ -64,6 +65,8 @@ class App extends React.Component<AppProps> {
                     <Button
                         disabled={!(this.state.currentCityOfList || (this.props.city.cities && this.props.city.cities.some(city => city.name === this.state.currentCityOfList)))}
                         submit={this.deleteCity} title={"Удалить"}/>
+                    {this.state.currentCityOfList ? <Button submit={this.showMonth.bind(this)}
+                                                            title={"Прогноз погоды на месяц"}/> : ''}
                 </div>
             </div>
         </div>
@@ -83,6 +86,11 @@ class App extends React.Component<AppProps> {
     show = () => {
         this.setState({'isShow': true});
     };
+
+    showMonth() {
+        history.push(`#/city/${this.state.currentCityOfList}`);
+        history.go();
+    }
 
 }
 
