@@ -25,8 +25,7 @@ export class Input extends React.Component<InputProps, {}> {
     handleChange = (selectedOption: any) => {
         this.props.handleInputChange(selectedOption.value);
         this.setState(
-            {selectedOption},
-            () => console.log(`Option selected:`, this.state.selectedOption.value)
+            {selectedOption}
         );
     };
 
