@@ -3,15 +3,22 @@ import {StyleSheet,} from 'react-native';
 import {MainScreen} from "./src/Main";
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import styled from 'styled-components';
+import {Provider} from 'react-redux'
+import {createStore} from "redux";
+import listApp from './src/store/list/reducers'
+
+const store = createStore(listApp);
 
 const Container = styled.View`
   backgroundColor: #f98500;
   flex:1`;
 const App: () => React$Node = () => {
     return (
-        <Container>
-            <MainScreen></MainScreen>
-        </Container>
+        <Provider store={store}>
+            <Container>
+                <MainScreen></MainScreen>
+            </Container>
+        </Provider>
     );
 };
 

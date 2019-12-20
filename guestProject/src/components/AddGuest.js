@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
+import { connect } from 'react-redux';
+import { addGuest } from '../store/list/actions'
 
 const TextInputGuest = styled.TextInput`
   backgroundColor: white
@@ -16,11 +18,21 @@ const AddButton = styled.Button`
   margin-bottom: 15 
   width: 10
 `;
-export const AddGuest = () => (
-    <SafeAreaView>
-        <TextInputGuest placeholder="Введите имя гостя"
-        ></TextInputGuest>
-        <AddButton title={'Добавить'}></AddButton>
+const AddGuest = ({ dispatch }) => {
+    const [text, setText] = useState();
 
-    </SafeAreaView>
-);
+    return (<SafeAreaView>
+        <TextInputGuest placeholder="Введите имя гостя"
+                        onChangeText={setText} value={text}
+        ></TextInputGuest>
+        <AddButton title={'Добавить'} onPress={add}></AddButton>
+
+    </SafeAreaView>);
+
+    function add() {
+        setText('');
+        dispatch(addGuest(text));
+    }
+};
+export default connect()(AddGuest)
+

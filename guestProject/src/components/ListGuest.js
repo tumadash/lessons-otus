@@ -1,6 +1,7 @@
 import React from 'react';
 import {SafeAreaView, View, FlatList, StyleSheet, Text} from 'react-native';
 import styled from "styled-components";
+import { connect } from 'react-redux';
 
 const GuestItem = styled.View`
   backgroundColor: white
@@ -36,11 +37,11 @@ function Item({title}) {
     );
 }
 
-export const ListGuest = () => (
+const ListGuest = ({list}) => (
     <SafeAreaView>
         <FlatList
-            data={DATA}
-            renderItem={({item}) => <Item title={item.title}/>}
+            data={list}
+            renderItem={({item}) => <Item title={item.name}/>}
             keyExtractor={item => item.id}
         />
     </SafeAreaView>
@@ -61,3 +62,16 @@ const styles = StyleSheet.create({
         fontSize: 32,
     },
 });
+
+const mapStateToProps = state => ({
+    list: state.list
+});
+
+const mapDispatchToProps = dispatch => ({
+    // toggleTodo: id => dispatch(toggleTodo(id))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ListGuest)
