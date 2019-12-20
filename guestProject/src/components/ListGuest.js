@@ -1,63 +1,60 @@
-import React from 'react';
-import {SafeAreaView, View, FlatList, StyleSheet, Text} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, Text} from 'react-native';
 import styled from "styled-components";
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-const GuestItem = styled.View`
+const GuestItem = styled.TouchableOpacity`
   backgroundColor: white
   width: 400;
   border-radius:5
   fontSize: 24;
   alignSelf: center;
   padding:  10px;
-  margin: 5px 0
-
- 
+  margin: 5px 0 
 `;
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-    },
-];
+const TextInputGuest = styled.TextInput`
+  backgroundColor: white
+  width: 400;
+  border-radius:5
+  fontSize: 24;
+  alignSelf: center;
+  padding:  10px;
+  margin-bottom: 15 
+`;
 
-function Item({title}) {
+function Item({item, selected, onSelect}) {
+    const {name, id} = item;
+    const [text, setText] = useState(name);
     return (
-        <GuestItem>
-            <Text style={styles.title}>{title}</Text>
-        </GuestItem>
+        selected === id ?
+            <TextInputGuest placeholder="Введите имя гостя"
+                            onChangeText={setText} value={text}
+            ></TextInputGuest> : <GuestItem onLongPress={() => onSelect(id)}>
+                <Text style={styles.title}>{name}</Text>
+            </GuestItem>
     );
 }
 
-const ListGuest = ({list}) => (
-    <SafeAreaView>
+const ListGuest = ({list}) => {
+    const [selected, setSelected] = React.useState();
+    const onSelect = React.useCallback(
+        id => {
+            console.log(id);
+            setSelected(id);
+        }, [selected],
+    );
+    return (<SafeAreaView>
         <FlatList
             data={list}
-            renderItem={({item}) => <Item title={item.name}/>}
+            renderItem={({item}) => <Item item={item} selected={selected}
+                                          onSelect={onSelect}/>}
             keyExtractor={item => item.id}
         />
-    </SafeAreaView>
-);
+    </SafeAreaView>);
+};
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-    },
     title: {
         fontSize: 32,
     },
