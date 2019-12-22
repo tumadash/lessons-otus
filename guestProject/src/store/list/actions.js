@@ -11,6 +11,6 @@ export function editGuest(guest) {
     return {type: EDIT_GUEST, guest}
 }
 
-export function deleteGuest(index) {
-    return {type: DELETE_GUEST, index}
+export function deleteGuest(id) {
+    return {type: DELETE_GUEST, id}
 }

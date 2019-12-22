@@ -1,21 +1,12 @@
 import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, Text} from 'react-native';
-import styled from "styled-components";
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import TextInputGuest from '../components/TextInputGuest'
-import {editGuest} from "../store/list/actions";
+import {deleteGuest, editGuest} from "../store/list/actions";
+import {ListItem} from 'react-native-elements';
+import {TouchableOpacity} from 'react-native';
 
-const GuestItem = styled.TouchableOpacity`
-  backgroundColor: white
-  width: 400;
-  border-radius:5
-  fontSize: 24;
-  alignSelf: center;
-  padding:  10px;
-  margin: 5px 0 
-`;
-
-function Item({editGuest, item, selected, onSelect}) {
+function Item({editGuest, deleteGuest, item, selected, onSelect}) {
     const {name, id} = item;
     const [text, setText] = useState(name);
     return (
@@ -25,13 +16,23 @@ function Item({editGuest, item, selected, onSelect}) {
                 editGuest({id: selected, name: text});
                 selected = '';
             }}
-            ></TextInputGuest> : <GuestItem onLongPress={() => onSelect(id)}>
-                <Text style={styles.title}>{name}</Text>
-            </GuestItem>
+            ></TextInputGuest> : <ListItem titleStyle={styles.inputItem} key={id}
+                                           title={name}
+                                           bottomDivider onLongPress={() => onSelect(id)}
+                                           rightIcon={{
+                                               Component: TouchableOpacity,
+                                               onPress: () => {
+                                                   deleteGuest(id)
+                                               },
+                                               name: 'ei-close',
+                                               type: "evilicon",
+                                               color: '#517fa4'
+                                           }}>
+            </ListItem>
     );
 }
 
-const ListGuest = ({list, editGuest}) => {
+const ListGuest = ({list, editGuest, deleteGuest}) => {
     const [selected, setSelected] = React.useState();
     const onSelect = React.useCallback(
         id => {
@@ -41,7 +42,8 @@ const ListGuest = ({list, editGuest}) => {
     return (<SafeAreaView>
         <FlatList
             data={list}
-            renderItem={({item}) => <Item editGuest={editGuest} item={item} selected={selected}
+            renderItem={({item}) => <Item editGuest={editGuest} deleteGuest={deleteGuest} item={item}
+                                          selected={selected}
                                           onSelect={onSelect}/>}
             keyExtractor={item => item.id}
         />
@@ -53,6 +55,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
     },
+    inputItem: {
+        fontSize: 24,
+    }
 });
 
 const mapStateToProps = state => ({
@@ -60,7 +65,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    editGuest: id => dispatch(editGuest(id))
+    editGuest: id => dispatch(editGuest(id)),
+    deleteGuest: id => dispatch(deleteGuest(id))
 });
 
 export default connect(
