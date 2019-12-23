@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import TextInputGuest from '../components/TextInputGuest'
-import {deleteGuest, editGuest} from "../store/list/actions";
+import {checkGuest, deleteGuest, editGuest} from "../store/list/actions";
 import {ListItem} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native';
+import RightButtons from "../components/RightButtons";
 
-function Item({editGuest, deleteGuest, item, selected, onSelect}) {
-    const {name, id} = item;
+function Item({editGuest, deleteGuest, item, selected, onSelect, checkGuest}) {
+    const {name, id, isChecked} = item;
     const [text, setText] = useState(name);
+
     return (
         selected === id ?
             <TextInputGuest placeholder="Введите имя гостя"
@@ -19,20 +20,15 @@ function Item({editGuest, deleteGuest, item, selected, onSelect}) {
             ></TextInputGuest> : <ListItem titleStyle={styles.inputItem} key={id}
                                            title={name}
                                            bottomDivider onLongPress={() => onSelect(id)}
-                                           rightIcon={{
-                                               Component: TouchableOpacity,
-                                               onPress: () => {
-                                                   deleteGuest(id)
-                                               },
-                                               name: 'ei-close',
-                                               type: "evilicon",
-                                               color: '#517fa4'
-                                           }}>
+                                           rightElement={<RightButtons deleteGuest={deleteGuest} id={id}
+                                                                       isChecked={isChecked}
+                                                                       checkGuest={checkGuest}></RightButtons>}>
+
             </ListItem>
     );
 }
 
-const ListGuest = ({list, editGuest, deleteGuest}) => {
+const ListGuest = ({list, editGuest, deleteGuest, checkGuest}) => {
     const [selected, setSelected] = React.useState();
     const onSelect = React.useCallback(
         id => {
@@ -44,7 +40,8 @@ const ListGuest = ({list, editGuest, deleteGuest}) => {
             data={list}
             renderItem={({item}) => <Item editGuest={editGuest} deleteGuest={deleteGuest} item={item}
                                           selected={selected}
-                                          onSelect={onSelect}/>}
+                                          onSelect={onSelect}
+                                          checkGuest={checkGuest}/>}
             keyExtractor={item => item.id}
         />
     </SafeAreaView>);
@@ -66,7 +63,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     editGuest: id => dispatch(editGuest(id)),
-    deleteGuest: id => dispatch(deleteGuest(id))
+    deleteGuest: id => dispatch(deleteGuest(id)),
+    checkGuest: id => dispatch(checkGuest(id))
 });
 
 export default connect(

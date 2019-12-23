@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {addGuest} from '../store/list/actions'
