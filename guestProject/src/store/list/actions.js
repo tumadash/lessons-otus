@@ -12,8 +12,8 @@ export function editGuest(guest) {
     return {type: EDIT_GUEST, guest}
 }
 
-export function deleteGuest(id) {
-    return {type: DELETE_GUEST, id}
+export function deleteGuest(guest) {
+    return {type: DELETE_GUEST, guest}
 }
 
 export function checkGuest(id) {

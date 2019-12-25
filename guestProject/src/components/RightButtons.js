@@ -12,11 +12,11 @@ export default RightButtons = ({deleteGuest, id, isChecked, checkGuest}) => {
                 }}
             />
             <Icon onPress={() => {
-                deleteGuest(id);
+                deleteGuest({id, isChecked});
             }}
-                  name='close'
-                  type="evilicon"
-                  color='#ef3900'></Icon>
-        </>);
+                name='close'
+                type="evilicon"
+                color='#ef3900'></Icon>
+                </>);
 
-};
+            };

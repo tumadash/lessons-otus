@@ -14,8 +14,8 @@ function Item({editGuest, deleteGuest, item, selected, onSelect, checkGuest}) {
         selected === id ?
             <TextInputGuest placeholder="Введите имя гостя"
                             onChangeText={setText} value={text} onBlur={() => {
-                editGuest({id: selected, name: text});
-                selected = '';
+                editGuest({id: selected, name: text, isChecked: isChecked});
+                onSelect('');
             }}
             ></TextInputGuest> : <ListItem titleStyle={styles.inputItem} key={id}
                                            title={name}

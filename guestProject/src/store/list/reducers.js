@@ -6,6 +6,8 @@ import {
     CHECK_GUEST
 } from './actions'
 
+let allGuest = 0;
+
 function editArray(state, id, name) {
     let array = JSON.parse(JSON.stringify(state));
     const index = array.map(function (e) {
@@ -16,6 +18,7 @@ function editArray(state, id, name) {
             array[index].name = name;
         } else {
             array[index].isChecked = !array[index].isChecked;
+            array[index].isChecked ? allGuest++ : allGuest--;
         }
     }
     return array;
@@ -24,6 +27,7 @@ function editArray(state, id, name) {
 function list(state = [], action) {
     switch (action.type) {
         case ADD_GUEST:
+            allGuest++;
             return [
                 ...state,
                 {
@@ -33,15 +37,18 @@ function list(state = [], action) {
                 }
             ];
         case DELETE_GUEST:
+            action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
             return state.filter(
-                guest => guest.id !== action.id
+                guest => guest.id !== action.guest.id
             );
         case CHECK_GUEST:
             return editArray(state, action.id);
         case EDIT_GUEST:
+            console.log(action.guest);
             if (action.guest.name) {
                 return editArray(state, action.guest.id, action.guest.name);
             }
+            action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
             return state.filter(
                 guest => guest.id !== action.guest.id
             );
@@ -50,8 +57,13 @@ function list(state = [], action) {
     }
 }
 
+function allGuests() {
+    return allGuest;
+}
+
 const listApp = combineReducers({
-    list
+    list,
+    allGuests
 });
 export default listApp
 

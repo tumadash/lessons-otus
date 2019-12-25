@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native';
+import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {addGuest} from '../store/list/actions'
 import TextInputGuest from '../components/TextInputGuest'
 
-const AddButton = styled.Button`
-  background: white;
-  margin-bottom: 15 
-  width: 10
-`;
 const AddGuest = ({dispatch}) => {
     const [text, setText] = useState();
 
@@ -17,7 +13,7 @@ const AddGuest = ({dispatch}) => {
         <TextInputGuest placeholder="Введите имя гостя"
                         onChangeText={setText} value={text}
         ></TextInputGuest>
-        <AddButton title={'Добавить'} onPress={add}></AddButton>
+        <Button disabled={!text} title={'Добавить'} onPress={add}></Button>
 
     </SafeAreaView>);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {MainScreen} from "./src/Main";
+import MainScreen from "./src/Main";
 import styled from 'styled-components';
 import {Provider} from 'react-redux'
 import {createStore} from "redux";
@@ -7,7 +7,7 @@ import listApp from './src/store/list/reducers'
 
 const store = createStore(listApp);
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   backgroundColor: #f98500;
   flex:1`;
 
