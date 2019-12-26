@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import TextInputGuest from '../components/TextInputGuest'
-import {checkGuest, deleteGuest, editGuest} from "../store/list/actions";
+import {checkGuest, deleteGuest, setVisibilityFilter, editGuest, VisibilityFilters} from "../store/list/actions";
 import {ListItem} from 'react-native-elements';
 import RightButtons from "../components/RightButtons";
 
@@ -58,13 +58,26 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    list: state.list
+    list: getVisibleGuest(state.list, state.visibilityFilter)
 });
+
+const getVisibleGuest = (list, filter) => {
+    switch (filter) {
+        case VisibilityFilters.SHOW_ALL:
+            return list;
+        case VisibilityFilters.SHOW_TWO:
+            return list.filter(t => t.isChecked);
+        case VisibilityFilters.SHOW_ONE:
+            return list.filter(t => !t.isChecked);
+        default:
+            throw new Error('Unknown filter: ' + filter)
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
     editGuest: id => dispatch(editGuest(id)),
-    deleteGuest: id => dispatch(deleteGuest(id)),
-    checkGuest: id => dispatch(checkGuest(id))
+    deleteGuest: id => {dispatch(deleteGuest(id)); dispatch(setVisibilityFilter(VisibilityFilters.SHOW_ALL))},
+    checkGuest: id => {dispatch(checkGuest(id)); dispatch(setVisibilityFilter(VisibilityFilters.SHOW_ALL))}
 });
 
 export default connect(
