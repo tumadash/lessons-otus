@@ -76,8 +76,8 @@ const getVisibleGuest = (list, filter) => {
 
 const mapDispatchToProps = dispatch => ({
     editGuest: id => dispatch(editGuest(id)),
-    deleteGuest: id => {dispatch(deleteGuest(id)); dispatch(setVisibilityFilter(VisibilityFilters.SHOW_ALL))},
-    checkGuest: id => {dispatch(checkGuest(id)); dispatch(setVisibilityFilter(VisibilityFilters.SHOW_ALL))}
+    deleteGuest: id => {dispatch(deleteGuest(id))},
+    checkGuest: id => dispatch(checkGuest(id)),
 });
 
 export default connect(
