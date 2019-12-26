@@ -26,10 +26,6 @@ function editArray(state, id, name) {
 }
 
 function list(state = [], action) {
-    allGuest = 0;
-    state.forEach((guest) => {
-        guest.isChecked ? allGuest + 2 : allGuest++
-    });
     switch (action.type) {
         case ADD_GUEST:
             allGuest++;
