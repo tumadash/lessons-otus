@@ -4,13 +4,14 @@ import {
     DELETE_GUEST,
     EDIT_GUEST,
     CHECK_GUEST,
-    VisibilityFilters, SET_VISIBILITY_FILTER
-} from './actions'
+    VisibilityFilters, SET_VISIBILITY_FILTER, GET_GUESTS
+} from './actions';
+import {addGuest, deleteGuest, editGuest, getGuests} from '../../service/list-service'
 
 let allGuest = 0;
 
 function editArray(state, id, name) {
-    let array = [...state];
+    let array = JSON.parse(JSON.stringify(state));
     const index = array.map(function (e) {
         return e.id;
     }).indexOf(id);
@@ -21,24 +22,27 @@ function editArray(state, id, name) {
             array[index].isChecked = !array[index].isChecked;
             array[index].isChecked ? allGuest++ : allGuest--;
         }
+        editGuest(array[index]);
     }
     return array;
 }
 
 function list(state = [], action) {
     switch (action.type) {
+        case GET_GUESTS:
+            return getGuests();
         case ADD_GUEST:
             allGuest++;
-            return [
-                ...state,
-                {
-                    id: generateId(action.name),
-                    name: action.name,
-                    isChecked: false
-                }
-            ];
+            let guest = {
+                id: generateId(action.name),
+                name: action.name,
+                isChecked: false
+            };
+            addGuest(guest);
+            return [...state, guest];
         case DELETE_GUEST:
             action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
+            deleteGuest(action.guest);
             return state.filter(
                 guest => guest.id !== action.guest.id
             );
@@ -49,6 +53,7 @@ function list(state = [], action) {
                 return editArray(state, action.guest.id, action.guest.name);
             }
             action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
+            deleteGuest(action.guest);
             return state.filter(
                 guest => guest.id !== action.guest.id
             );

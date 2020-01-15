@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import TextInputGuest from '../components/TextInputGuest'
-import {checkGuest, deleteGuest, setVisibilityFilter, editGuest, VisibilityFilters} from "../store/list/actions";
+import {checkGuest, deleteGuest, editGuest, getGuests, VisibilityFilters} from "../store/list/actions";
 import {ListItem} from 'react-native-elements';
 import RightButtons from "../components/RightButtons";
 
@@ -28,13 +28,17 @@ function Item({editGuest, deleteGuest, item, selected, onSelect, checkGuest}) {
     );
 }
 
-const ListGuest = ({list, editGuest, deleteGuest, checkGuest}) => {
+const ListGuest = ({list, editGuest, deleteGuest, checkGuest, getGuests}) => {
     const [selected, setSelected] = React.useState();
     const onSelect = React.useCallback(
         id => {
             setSelected(id);
         }, [selected],
     );
+    useEffect(() => {
+        getGuests();
+    }, []);
+
     return (<SafeAreaView>
         <FlatList
             data={list}
@@ -78,6 +82,7 @@ const mapDispatchToProps = dispatch => ({
     editGuest: id => dispatch(editGuest(id)),
     deleteGuest: id => {dispatch(deleteGuest(id))},
     checkGuest: id => dispatch(checkGuest(id)),
+    getGuests: () => dispatch(getGuests()),
 });
 
 export default connect(
