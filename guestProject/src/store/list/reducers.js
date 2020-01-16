@@ -1,12 +1,13 @@
 import {combineReducers} from 'redux'
 import {
     ADD_GUEST,
+    CHECK_GUEST,
     DELETE_GUEST,
     EDIT_GUEST,
-    CHECK_GUEST,
-    VisibilityFilters, SET_VISIBILITY_FILTER, GET_GUESTS
+    GET_GUESTS,
+    SET_VISIBILITY_FILTER,
+    VisibilityFilters
 } from './actions';
-import {addGuest, deleteGuest, editGuest, getGuests} from '../../service/list-service'
 
 let allGuest = 0;
 
@@ -22,7 +23,6 @@ function editArray(state, id, name) {
             array[index].isChecked = !array[index].isChecked;
             array[index].isChecked ? allGuest++ : allGuest--;
         }
-        editGuest(array[index]);
     }
     return array;
 }
@@ -30,33 +30,20 @@ function editArray(state, id, name) {
 function list(state = [], action) {
     switch (action.type) {
         case GET_GUESTS:
-            return getGuests();
+            calcAllGuest(state = VisibilityFilters.SHOW_ALL,  action.list)
+            return action.list;
         case ADD_GUEST:
             allGuest++;
-            let guest = {
-                id: generateId(action.name),
-                name: action.name,
-                isChecked: false
-            };
-            addGuest(guest);
-            return [...state, guest];
+            return [...state, action.guest];
         case DELETE_GUEST:
             action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
-            deleteGuest(action.guest);
             return state.filter(
                 guest => guest.id !== action.guest.id
             );
         case CHECK_GUEST:
             return editArray(state, action.id);
         case EDIT_GUEST:
-            if (action.guest.name) {
-                return editArray(state, action.guest.id, action.guest.name);
-            }
-            action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
-            deleteGuest(action.guest);
-            return state.filter(
-                guest => guest.id !== action.guest.id
-            );
+            return editArray(state, action.guest.id, action.guest.name);
         default:
             return state
     }
@@ -101,6 +88,3 @@ const listApp = combineReducers({
 });
 export default listApp
 
-function generateId(name) {
-    return name + Math.random().toString(16).slice(2)
-}

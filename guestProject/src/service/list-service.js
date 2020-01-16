@@ -1,31 +1,34 @@
 import database from '@react-native-firebase/database';
+
 const ref = database().ref(`/guests`);
 
-export const getGuests = () => {
-    // const ref = database().ref(`/guests/`);
-    // const snapshot = ref.once('value');
-    console.log('User data: ');
-    let recentPostsRef = database().ref('/guests');
-    recentPostsRef.once('value').then(snapshot => {
-        // snapshot.val() is the dictionary with all your keys/values from the '/store' path
-
-    });
-    console.log('User data: ', snapshot.val());
-    return [{name: 'efreterte'}]
+export const getGuestsService = async () => {
+    let recentPostsRef = await database().ref('/guests');
+    return recentPostsRef.once('value');
 };
 
-export const addGuest = (guest) =>  {
+export const addGuestService = (guest) => {
     const ref = database().ref(`/guests/${guest.id}`);
     guest.uid = guest.id;
     ref.set(guest);
 };
 
-export const deleteGuest = (guest) => {
+export const checkGuestService = (id) => {
+    const ref = database().ref(`/guests/${id}`);
+    ref.once('value').then(snapshot => {
+        let guest = snapshot.val();
+        guest.isChecked = !guest.isChecked;
+        ref.set(guest);
+    });
+
+};
+
+export const deleteGuestService = (guest) => {
     const ref = database().ref(`/guests/${guest.id}`);
     ref.set(null);
 };
 
-export const editGuest = (guest) => {
+export const editGuestService = (guest) => {
     const ref = database().ref(`/guests/${guest.id}`);
     ref.set(guest);
 };
