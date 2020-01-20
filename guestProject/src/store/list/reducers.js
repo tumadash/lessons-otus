@@ -9,9 +9,7 @@ import {
 
 function editArray(state, id, name) {
     let array = JSON.parse(JSON.stringify(state));
-    const index = array.map(function (e) {
-        return e.id;
-    }).indexOf(id);
+    const index = array.map((e) => e.id).indexOf(id);
     if (~index) {
         if (name) {
             array[index].name = name;

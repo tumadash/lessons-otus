@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {Item} from "./Item";
-import {checkGuest, deleteGuest, editGuest, getGuests, VisibilityFilters} from "../store/list/actions";
+import {checkGuest, deleteGuest, editGuest, getGuests} from "../store/list/actions";
+import { VisibilityFilters} from "../store/filter/actions";
 
 // function calcAllGuest(filter, list) {
 //     switch (filter) {
