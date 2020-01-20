@@ -1,9 +1,7 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import styled from 'styled-components';
-import AddGuest from "./containers/AddGuest";
-import ListGuest from "./containers/ListGuest";
-import FilterGuest from "./containers/FilterGuest";
+import {AddGuest, ListGuest, FilterGuest} from "./containers";
 import {connect} from "react-redux";
 
 const Title = styled.Text`
@@ -19,20 +17,21 @@ const CountGuest = styled.Text`
   margin: 15px
 `;
 
-const MainScreen = ({allGuests}) => (
+const MainScreen = ({}) => (
     <SafeAreaView>
         <Title>Гости</Title>
         <AddGuest/>
-        <CountGuest>Количество гостей: {allGuests}</CountGuest>
-        <FilterGuest></FilterGuest>
-        <ListGuest></ListGuest>
+        <CountGuest>Количество гостей: {4}</CountGuest>
+        <FilterGuest/>
+        <ListGuest/>
     </SafeAreaView>
 );
-const mapStateToProps = state => ({
-    allGuests: state.allGuests
-});
+// const mapStateToProps = state => ({
+//     allGuests: state.allGuests
+// });
 
 
-export default connect(
-    mapStateToProps,
-)(MainScreen)
+// export default connect(
+//     mapStateToProps,
+// )(MainScreen)
+export default MainScreen;
