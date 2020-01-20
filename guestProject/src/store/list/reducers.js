@@ -1,16 +1,18 @@
 import {combineReducers} from 'redux'
 import {
     ADD_GUEST,
+    CHECK_GUEST,
     DELETE_GUEST,
     EDIT_GUEST,
-    CHECK_GUEST,
-    VisibilityFilters, SET_VISIBILITY_FILTER
-} from './actions'
+    GET_GUESTS,
+    SET_VISIBILITY_FILTER,
+    VisibilityFilters
+} from './actions';
 
 let allGuest = 0;
 
 function editArray(state, id, name) {
-    let array = [...state];
+    let array = JSON.parse(JSON.stringify(state));
     const index = array.map(function (e) {
         return e.id;
     }).indexOf(id);
@@ -27,16 +29,12 @@ function editArray(state, id, name) {
 
 function list(state = [], action) {
     switch (action.type) {
+        case GET_GUESTS:
+            calcAllGuest(state = VisibilityFilters.SHOW_ALL,  action.list)
+            return action.list;
         case ADD_GUEST:
             allGuest++;
-            return [
-                ...state,
-                {
-                    id: generateId(action.name),
-                    name: action.name,
-                    isChecked: false
-                }
-            ];
+            return [...state, action.guest];
         case DELETE_GUEST:
             action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
             return state.filter(
@@ -45,13 +43,7 @@ function list(state = [], action) {
         case CHECK_GUEST:
             return editArray(state, action.id);
         case EDIT_GUEST:
-            if (action.guest.name) {
-                return editArray(state, action.guest.id, action.guest.name);
-            }
-            action.guest.isChecked ? (allGuest = allGuest - 2) : allGuest--;
-            return state.filter(
-                guest => guest.id !== action.guest.id
-            );
+            return editArray(state, action.guest.id, action.guest.name);
         default:
             return state
     }
@@ -96,6 +88,3 @@ const listApp = combineReducers({
 });
 export default listApp
 
-function generateId(name) {
-    return name + Math.random().toString(16).slice(2)
-}

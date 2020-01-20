@@ -1,41 +1,22 @@
-import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {FlatList, SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
-import TextInputGuest from '../components/TextInputGuest'
-import {checkGuest, deleteGuest, setVisibilityFilter, editGuest, VisibilityFilters} from "../store/list/actions";
-import {ListItem} from 'react-native-elements';
-import RightButtons from "../components/RightButtons";
+import {Item} from "./Item";
+import {checkGuest, deleteGuest, editGuest, getGuests, VisibilityFilters} from "../store/list/actions";
 
-function Item({editGuest, deleteGuest, item, selected, onSelect, checkGuest}) {
-    const {name, id, isChecked} = item;
-    const [text, setText] = useState(name);
-
-    return (
-        selected === id ?
-            <TextInputGuest placeholder="Введите имя гостя"
-                            onChangeText={setText} value={text} onBlur={() => {
-                editGuest({id: selected, name: text, isChecked: isChecked});
-                onSelect('');
-            }}
-            ></TextInputGuest> : <ListItem titleStyle={styles.inputItem} key={id}
-                                           title={name}
-                                           bottomDivider onLongPress={() => onSelect(id)}
-                                           rightElement={<RightButtons deleteGuest={deleteGuest} id={id}
-                                                                       isChecked={isChecked}
-                                                                       checkGuest={checkGuest}></RightButtons>}>
-
-            </ListItem>
-    );
-}
-
-const ListGuest = ({list, editGuest, deleteGuest, checkGuest}) => {
+const ListGuest = ({list, editGuest, deleteGuest, checkGuest, getGuests}) => {
     const [selected, setSelected] = React.useState();
     const onSelect = React.useCallback(
         id => {
             setSelected(id);
         }, [selected],
     );
-    return (<SafeAreaView>
+    useEffect(() => {
+        getGuests();
+        setSelected(null);
+    }, []);
+
+    return (<SafeAreaView style={{flex: 1}}>
         <FlatList
             data={list}
             renderItem={({item}) => <Item editGuest={editGuest} deleteGuest={deleteGuest} item={item}
@@ -47,15 +28,6 @@ const ListGuest = ({list, editGuest, deleteGuest, checkGuest}) => {
     </SafeAreaView>);
 };
 
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-    },
-    inputItem: {
-        fontSize: 24,
-    }
-});
 
 const mapStateToProps = state => ({
     list: getVisibleGuest(state.list, state.visibilityFilter)
@@ -78,6 +50,7 @@ const mapDispatchToProps = dispatch => ({
     editGuest: id => dispatch(editGuest(id)),
     deleteGuest: id => {dispatch(deleteGuest(id))},
     checkGuest: id => dispatch(checkGuest(id)),
+    getGuests: () => dispatch(getGuests()),
 });
 
 export default connect(
