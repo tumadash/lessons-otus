@@ -3,23 +3,8 @@ import {FlatList, SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {Item} from "./Item";
 import {checkGuest, deleteGuest, editGuest, getGuests} from "../store/list/actions";
-import { VisibilityFilters} from "../store/filter/actions";
+import {VisibilityFilters} from "../store/filter/actions";
 
-// function calcAllGuest(filter, list) {
-//     switch (filter) {
-//         case VisibilityFilters.SHOW_TWO:
-//             allGuest = list.filter(guest => guest.isChecked).length * 2;
-//             break;
-//         case VisibilityFilters.SHOW_ONE:
-//             allGuest = list.filter(t => !t.isChecked).length;
-//             break;
-//         default:
-//             allGuest = 0;
-//             for (let i = 0; i < list.length; i++) {
-//                 allGuest = list[i].isChecked ? allGuest + 2 : allGuest + 1;
-//             }
-//     }
-// }
 
 const renderListGuestItem = (item, list, editGuest, deleteGuest, checkGuest, onSelect, selected) => {
     return <Item editGuest={editGuest} deleteGuest={deleteGuest} item={item}
