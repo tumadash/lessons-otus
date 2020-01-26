@@ -2,7 +2,8 @@ import React from 'react';
 import MainScreen from "./src/Main";
 import {Provider} from 'react-redux'
 import styled from "styled-components";
-import {store} from  "./src/store/store"
+import { store, persistor } from './src/store/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const Container = styled.ScrollView`
   backgroundColor: #f98500;
@@ -10,9 +11,11 @@ const Container = styled.ScrollView`
 
 const App = () => (
     <Provider store={store}>
-        <Container>
-            <MainScreen/>
-        </Container>
+        <PersistGate loading={null} persistor={persistor}>
+            <Container>
+                <MainScreen/>
+            </Container>
+        </PersistGate>
     </Provider>
 );
 
