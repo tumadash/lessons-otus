@@ -11,8 +11,8 @@ const AddGuest = ({dispatch}) => {
     return (<SafeAreaView>
         <TextInputGuest placeholder="Введите имя гостя"
                         onChangeText={setText} value={text}
-        ></TextInputGuest>
-        <Button disabled={!text} title={'Добавить'} onPress={add}></Button>
+        />
+        <Button disabled={!text} title={'Добавить'} onPress={add}/>
 
     </SafeAreaView>);
 
