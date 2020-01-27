@@ -1,5 +1,6 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
+import {Button} from 'react-native-elements';
 import styled from 'styled-components';
 import {AddGuest, FilterGuest, ListGuest} from "./containers";
 import {connect} from "react-redux";
@@ -33,8 +34,15 @@ function calcAllGuest(filter, list) {
     }
 }
 
-const MainScreen = ({allGuests}) => (
+const MainScreen = (props, {allGuests}) => (
     <SafeAreaView>
+        <Button
+            title="SEND"
+            onPress={() => {
+                // publish();
+                props.navigation.navigate('About');
+            }}
+        />
         <Title>Гости</Title>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
