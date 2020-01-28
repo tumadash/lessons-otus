@@ -4,13 +4,9 @@ import styled from 'styled-components';
 import {AddGuest, FilterGuest, ListGuest} from "./containers";
 import {connect} from "react-redux";
 import {VisibilityFilters} from "./store/filter/actions";
+import Title from "./components/Title";
 
-const Title = styled.Text`
-  color: white;
-  textAlign: center;
-  fontSize: 48;
-  margin-bottom: 15
-`;
+
 const CountGuest = styled.Text`
   color: white;
   textAlign: center;

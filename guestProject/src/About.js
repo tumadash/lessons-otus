@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {KeyboardAvoidingView, SafeAreaView, ScrollView, View,} from 'react-native';
-import {Button, Input} from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 
 import {connect} from 'react-redux';
 import {editGuest} from "./store/list/actions";
+import TextInputGuest from "./components/TextInputGuest";
+import Title from "./components/Title";
 
 export function AboutScreen({navigation, list, editGuest}) {
     const id = navigation.getParam('id');
@@ -16,22 +18,27 @@ export function AboutScreen({navigation, list, editGuest}) {
             <KeyboardAvoidingView behavior="position">
                 <ScrollView keyboardShouldPersistTaps="always">
                     <View>
-                        <Input
-                            value={aboutText}
-                            onChangeText={setAboutText}
-                            placeholder="Комментарий"
-                            containerStyle={{marginBottom: 20}}
-                            onBlur={() => {
-                                guest.about = aboutText;
-                                editGuest(guest);
-                            }}
-                        />
+                        <Title>Гость: {guest.name}</Title>
                         <Button
-                            title="back"
+                            buttonStyle={{width: 100, marginBottom: 10}}
+                            icon={<Icon name="arrow-back" color="white"/>}
+                            title="Назад"
                             onPress={() => {
                                 navigation.navigate('Main');
                             }}
                         />
+                            <TextInputGuest
+                                value={aboutText}
+                                onChangeText={setAboutText}
+                                placeholder="Комментарий"
+                                containerStyle={{marginBottom: 20}}
+                                multiline={true}
+                                numberOfLines={10}
+                                onBlur={() => {
+                                    guest.about = aboutText;
+                                    editGuest(guest);
+                                }}
+                            />
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
