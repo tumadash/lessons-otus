@@ -7,12 +7,12 @@ import {
 } from './actions';
 
 
-function editArray(state, id, name) {
+function editArray(state, id, guest) {
     let array = JSON.parse(JSON.stringify(state));
     const index = array.map((e) => e.id).indexOf(id);
     if (~index) {
-        if (name) {
-            array[index].name = name;
+        if (guest) {
+            array[index] = guest;
         } else {
             array[index].isChecked = !array[index].isChecked;
         }
@@ -33,7 +33,7 @@ export const list = (state = [], action) => {
         case CHECK_GUEST:
             return editArray(state, action.id);
         case EDIT_GUEST:
-            return editArray(state, action.guest.id, action.guest.name);
+            return editArray(state, action.guest.id, action.guest);
         default:
             return state
     }

@@ -1,68 +1,55 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, SafeAreaView, ScrollView, Text, View,} from 'react-native';
+import {KeyboardAvoidingView, SafeAreaView, ScrollView, View,} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 
 import {connect} from 'react-redux';
+import {editGuest} from "./store/list/actions";
 
-class NewPostScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: 'iiiiii love eat'
-        };
-    }
+export function AboutScreen({navigation, list, editGuest}) {
+    const id = navigation.getParam('id');
+    let guest = list.filter(
+        guest => guest.id === id
+    )[0];
+    const [aboutText, setAboutText] = useState(guest.about);
+    return (
+        <SafeAreaView>
+            <KeyboardAvoidingView behavior="position">
+                <ScrollView keyboardShouldPersistTaps="always">
+                    <View>
+                        <Input
+                            value={aboutText}
+                            onChangeText={setAboutText}
+                            placeholder="Комментарий"
+                            containerStyle={{marginBottom: 20}}
+                            onBlur={() => {
+                                guest.about = aboutText;
+                                editGuest(guest);
+                            }}
+                        />
+                        <Button
+                            title="back"
+                            onPress={() => {
+                                navigation.navigate('Main');
+                            }}
+                        />
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
 
-    static navigationOptions = {
-        headerTitle: () => <Text>New Post</Text>,
-        headerRight: () => (
-            <Button
-                onPress={() => alert('This is a button!')}
-                title="Info"
-                color="#fff"
-            />
-        ),
-    };
-
-    render() {
-        // const {comment, setComment, publish} = this.props;
-        return (
-            <SafeAreaView>
-                <KeyboardAvoidingView behavior="position">
-                    <ScrollView keyboardShouldPersistTaps="always">
-                        <View>
-                            <Input
-                                value={this.state.text}
-                                // onChangeText={this.setState}
-                                placeholder="Комментарий"
-                                containerStyle={{marginBottom: 20}}
-                            />
-                            <Button
-                                title="back"
-                                onPress={() => {
-                                    // publish();
-                                    this.props.navigation.navigate('Main');
-                                }}
-                            />
-                        </View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        );
-    }
 }
 
-const mapStateToProps = state => {
-    return {
-        // comment: state.newpost.comment,
-    };
-};
+
+const mapStateToProps = state => ({
+    list: state.list
+});
 
 const mapDispatchToProps = dispatch => ({
-    // setComment: text => dispatch(setNewPostComment(text)),
-    // publish: () => dispatch(publishPost()),
+    editGuest: guest => dispatch(editGuest(guest)),
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(NewPostScreen);
+)(AboutScreen);
