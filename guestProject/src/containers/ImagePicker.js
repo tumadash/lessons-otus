@@ -1,11 +1,9 @@
 import React, {useState, useCallback} from 'react';
 import {Image, View, TouchableOpacity, Text} from 'react-native';
 import ImagePickerLib from 'react-native-image-picker';
-import ImageResizer from 'react-native-image-resizer';
 import {Button, Icon, Avatar} from 'react-native-elements';
 const options = {
-    title: 'Select Image',
-    customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+    title: 'Выберите фото...',
     storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -15,7 +13,7 @@ const options = {
 export const ImagePicker = () => {
     const [image, setImage] = useState(undefined);
     const pickImage = useCallback(() => {
-        ImagePickerLib.launchCamera(options, response => {
+        ImagePickerLib.showImagePicker(options, response => {
             console.log('Response = ', response);
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -27,22 +25,6 @@ export const ImagePicker = () => {
                 console.log(response);
                 const source = {uri: response.uri};
                 setImage(source);
-                ImageResizer.createResizedImage(
-                    response.uri,
-                    response.width / 6,
-                    response.height / 6,
-                    'JPEG',
-                    5,
-                ).then(compressed => {
-                    const now = String(Date.now());
-                    const source = {
-                        uri: compressed.uri,
-                        width: response.width / 4,
-                        height: response.height / 4,
-                        name: `${now}.jpg`,
-                    };
-                    setImage(source);
-                });
             }
         });
     }, []);
