@@ -2,6 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {Image, View, TouchableOpacity, Text} from 'react-native';
 import ImagePickerLib from 'react-native-image-picker';
 import {Button, Icon, Avatar} from 'react-native-elements';
+
 const options = {
     title: 'Выберите фото...',
     storageOptions: {
@@ -19,8 +20,6 @@ export const ImagePicker = () => {
                 console.log('User cancelled image picker');
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
             } else {
                 console.log(response);
                 const source = {uri: response.uri};
