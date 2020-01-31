@@ -35,8 +35,8 @@ const MainScreen = ({navigation, allGuests}) => {
         navigation.navigate('About', {id: guest.id});
     };
     return <SafeAreaView>
-        <ImagePicker/>
         <Title>Гости</Title>
+        <ImagePicker/>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
         <FilterGuest/>

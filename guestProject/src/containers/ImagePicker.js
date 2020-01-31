@@ -29,7 +29,7 @@ export const ImagePicker = () => {
         });
     }, []);
     return (
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'flex-end', margin: 5}}>
             {image ? <Avatar size={"large"} rounded source={image} onPress={pickImage}/> :
                 <Avatar size={"large"} rounded icon={{name: 'user', type: 'font-awesome'}} onPress={pickImage}/>}
         </View>
