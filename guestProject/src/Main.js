@@ -5,6 +5,7 @@ import {AddGuest, FilterGuest, ListGuest} from "./containers";
 import {connect} from "react-redux";
 import {VisibilityFilters} from "./store/filter/actions";
 import Title from "./components/Title";
+import {ImagePicker} from "./containers/ImagePicker"
 
 
 const CountGuest = styled.Text`
@@ -34,6 +35,7 @@ const MainScreen = ({navigation, allGuests}) => {
         navigation.navigate('About', {id: guest.id});
     };
     return <SafeAreaView>
+        <ImagePicker/>
         <Title>Гости</Title>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
