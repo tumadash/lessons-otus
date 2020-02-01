@@ -12,18 +12,14 @@ const options = {
         path: 'images',
     },
 };
+const DEFAULT_PIC = "https://i.picsum.photos/id/1011/5472/3648.jpg";
 
 const ProfileScreen = ({navigation, user, setName, setPhoto}) => {
-    const image = {uri: user.photo};
+    const image = {uri: (user.photo ? user.photo: DEFAULT_PIC)};
     const [text, setText] = useState(user.name);
     const pickImage = useCallback(() => {
         ImagePickerLib.showImagePicker(options, response => {
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
+            if (response.uri) {
                 setPhoto(response.uri);
             }
         });

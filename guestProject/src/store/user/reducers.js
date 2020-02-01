@@ -5,7 +5,6 @@ export const user = (state = {}, action) => {
         case SET_NAME:
             return {name: action.name, photo: state.photo};
         case SET_PHOTO:
-            console.log(action);
             return {name: state.name, photo: action.uri};
         default:
             return state

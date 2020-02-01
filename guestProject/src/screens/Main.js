@@ -1,11 +1,10 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import styled from 'styled-components';
-import {AddGuest, FilterGuest, ListGuest} from "../containers/index";
+import {AddGuest, FilterGuest, ListGuest, AvatarGuest} from "../containers";
 import {connect} from "react-redux";
 import {VisibilityFilters} from "../store/filter/actions";
 import Title from "../components/Title";
-import ImagePicker from "../containers/ImagePicker"
 
 
 const CountGuest = styled.Text`
@@ -39,7 +38,7 @@ const MainScreen = ({navigation, allGuests}) => {
     };
     return <SafeAreaView>
         <Title>Гости</Title>
-        <ImagePicker toProfile={toProfile}/>
+        <AvatarGuest toProfile={toProfile}/>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
         <FilterGuest/>
