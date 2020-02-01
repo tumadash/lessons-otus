@@ -1,36 +1,29 @@
-import React, {useState, useCallback} from 'react';
-import {Image, View, TouchableOpacity, Text} from 'react-native';
-import ImagePickerLib from 'react-native-image-picker';
-import {Button, Icon, Avatar} from 'react-native-elements';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Avatar} from 'react-native-elements';
+import {connect} from "react-redux";
 
-const options = {
-    title: 'Выберите фото...',
-    storageOptions: {
-        skipBackup: true,
-        path: 'images',
-    },
-};
-
-export const ImagePicker = () => {
-    const [image, setImage] = useState(undefined);
-    const pickImage = useCallback(() => {
-        ImagePickerLib.showImagePicker(options, response => {
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                console.log(response);
-                const source = {uri: response.uri};
-                setImage(source);
-            }
-        });
-    }, []);
+const ImagePicker = ({user, toProfile}) => {
+    const image = {uri: user.photo};
     return (
-        <View style={{alignItems: 'flex-end', margin: 5}}>
-            {image ? <Avatar size={"large"} rounded source={image} onPress={pickImage}/> :
-                <Avatar size={"large"} rounded icon={{name: 'user', type: 'font-awesome'}} onPress={pickImage}/>}
+        <View style={styles.avatar}>
+            {image ? <Avatar size={"large"} rounded source={image} onPress={toProfile}/> :
+                <Avatar size={"large"} rounded icon={{name: 'user', type: 'font-awesome'}} onPress={toProfile}/>}
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    avatar: {
+        alignItems: 'flex-end', margin: 5
+    }
+});
+
+
+const mapStateToProps = state => ({
+    user: state.user
+});
+
+export default connect(
+    mapStateToProps,
+)(ImagePicker);
