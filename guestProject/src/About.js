@@ -16,6 +16,9 @@ const AboutScreen = ({navigation, list, editGuest}) => {
         const {name, id, isChecked} = guest;
         editGuest({name, id, isChecked, about: aboutText});
     };
+    const goMain = () => {
+        navigation.navigate('Main');
+    };
     return (
         <SafeAreaView>
             <KeyboardAvoidingView behavior="position">
@@ -26,9 +29,7 @@ const AboutScreen = ({navigation, list, editGuest}) => {
                             buttonStyle={styles.guestButton}
                             icon={<Icon name="arrow-back" color="white"/>}
                             title="Назад"
-                            onPress={() => {
-                                navigation.navigate('Main');
-                            }}
+                            onPress={goMain}
                         />
                         <TextInputGuest
                             value={aboutText}
