@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import TextInputGuest from '../components/TextInputGuest'
+import React, {useState} from 'react';
+import {RightButtons, TextInputGuest} from '../components'
 import {ListItem} from 'react-native-elements';
-import RightButtons from "../components/RightButtons";
-import {StyleSheet, Animated} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 
-export function Item({toAbout, editGuest, deleteGuest, item, selected, onSelect, checkGuest}) {
+export const Item = ({toAbout, editGuest, deleteGuest, item, selected, onSelect, checkGuest}) => {
     const {name, id, isChecked} = item;
     const [text, setText] = useState(name);
     let opacity = new Animated.Value(1);
@@ -12,19 +11,18 @@ export function Item({toAbout, editGuest, deleteGuest, item, selected, onSelect,
         Animated.timing(opacity, {
             toValue: 0,
             duration: 300,
-        }).start(() => {
-            deleteGuest({id, isChecked})
-        });
+        }).start(() => deleteGuest({id, isChecked}));
+    };
+    const save = () => {
+        editGuest({id: selected, name: text, isChecked: isChecked});
+        onSelect('');
     };
     return (<Animated.View style={{opacity: opacity}}>
             {selected === id ?
                 <TextInputGuest placeholder="Введите имя гостя"
                                 onChangeText={setText}
                                 value={text}
-                                onBlur={() => {
-                                    editGuest({id: selected, name: text, isChecked: isChecked});
-                                    onSelect('');
-                                }}
+                                onBlur={save}
                 /> : <ListItem titleStyle={styles.inputItem}
                                key={id}
                                title={name}
@@ -38,7 +36,7 @@ export function Item({toAbout, editGuest, deleteGuest, item, selected, onSelect,
                 </ListItem>}
         </Animated.View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     title: {

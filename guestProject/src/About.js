@@ -1,18 +1,24 @@
 import React, {useState} from 'react';
 import {KeyboardAvoidingView, SafeAreaView, ScrollView, View,} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
-
+import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {editGuest} from "./store/list/actions";
-import TextInputGuest from "./components/TextInputGuest";
-import Title from "./components/Title";
+import {TextInputGuest, Title} from "./components";
 
-export function AboutScreen({navigation, list, editGuest}) {
+const AboutScreen = ({navigation, list, editGuest}) => {
     const id = navigation.getParam('id');
     let guest = list.filter(
         guest => guest.id === id
     )[0];
     const [aboutText, setAboutText] = useState(guest.about);
+    const save = () => {
+        const {name, id, isChecked} = guest;
+        editGuest({name, id, isChecked, about: aboutText});
+    };
+    const goMain = () => {
+        navigation.navigate('Main');
+    };
     return (
         <SafeAreaView>
             <KeyboardAvoidingView behavior="position">
@@ -20,33 +26,36 @@ export function AboutScreen({navigation, list, editGuest}) {
                     <View>
                         <Title>Гость: {guest.name}</Title>
                         <Button
-                            buttonStyle={{width: 100, marginBottom: 10}}
+                            buttonStyle={styles.guestButton}
                             icon={<Icon name="arrow-back" color="white"/>}
                             title="Назад"
-                            onPress={() => {
-                                navigation.navigate('Main');
-                            }}
+                            onPress={goMain}
                         />
-                            <TextInputGuest
-                                value={aboutText}
-                                onChangeText={setAboutText}
-                                placeholder="Комментарий"
-                                containerStyle={{marginBottom: 20}}
-                                multiline={true}
-                                numberOfLines={10}
-                                onBlur={() => {
-                                    guest.about = aboutText;
-                                    editGuest(guest);
-                                }}
-                            />
+                        <TextInputGuest
+                            value={aboutText}
+                            onChangeText={setAboutText}
+                            placeholder="Комментарий"
+                            containerStyle={styles.guestTextInput}
+                            multiline={true}
+                            numberOfLines={10}
+                            onBlur={save}
+                        />
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
+};
 
-}
-
+const styles = StyleSheet.create({
+    guestTextInput: {
+        marginBottom: 20
+    },
+    guestButton: {
+        width: 100,
+        marginBottom: 10
+    }
+});
 
 const mapStateToProps = state => ({
     list: state.list

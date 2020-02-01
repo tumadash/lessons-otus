@@ -6,12 +6,11 @@ import {checkGuest, deleteGuest, editGuest, getGuests} from "../store/list/actio
 import {VisibilityFilters} from "../store/filter/actions";
 
 
-const renderListGuestItem = (toAbout, item, list, editGuest, deleteGuest, checkGuest, onSelect, selected) => {
-    return <Item toAbout={toAbout} editGuest={editGuest} deleteGuest={deleteGuest} item={item}
-                 selected={selected}
-                 onSelect={onSelect}
-                 checkGuest={checkGuest}/>
-};
+const renderListGuestItem = (toAbout, item, list, editGuest, deleteGuest, checkGuest, onSelect, selected) =>
+    <Item toAbout={toAbout} editGuest={editGuest} deleteGuest={deleteGuest} item={item}
+          selected={selected}
+          onSelect={onSelect}
+          checkGuest={checkGuest}/>;
 
 const ListGuest = ({toAbout, list, editGuest, deleteGuest, checkGuest, getGuests}) => {
     const [selected, setSelected] = React.useState();
