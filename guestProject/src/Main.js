@@ -1,10 +1,9 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import styled from 'styled-components';
-import AddGuest from "./containers/AddGuest";
-import ListGuest from "./containers/ListGuest";
-import FilterGuest from "./containers/FilterGuest";
+import {AddGuest, FilterGuest, ListGuest} from "./containers";
 import {connect} from "react-redux";
+import {VisibilityFilters} from "./store/filter/actions";
 
 const Title = styled.Text`
   color: white;
@@ -19,20 +18,34 @@ const CountGuest = styled.Text`
   margin: 15px
 `;
 
+function calcAllGuest(filter, list) {
+    switch (filter) {
+        case VisibilityFilters.SHOW_TWO:
+            return list.filter(guest => guest.isChecked).length * 2;
+        case VisibilityFilters.SHOW_ONE:
+            return list.filter(t => !t.isChecked).length;
+        default:
+            let allGuest = 0;
+            for (let i = 0; i < list.length; i++) {
+                allGuest = list[i].isChecked ? allGuest + 2 : allGuest + 1;
+            }
+            return allGuest;
+    }
+}
+
 const MainScreen = ({allGuests}) => (
     <SafeAreaView>
         <Title>Гости</Title>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
-        <FilterGuest></FilterGuest>
-        <ListGuest></ListGuest>
+        <FilterGuest/>
+        <ListGuest/>
     </SafeAreaView>
 );
+
 const mapStateToProps = state => ({
-    allGuests: state.allGuests
+    allGuests: calcAllGuest(state.visibilityFilter, state.list)
 });
-
-
 export default connect(
-    mapStateToProps,
-)(MainScreen)
+    mapStateToProps
+)(MainScreen);

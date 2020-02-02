@@ -11,35 +11,34 @@ export const GET_GUESTS = 'GET_GUESTS';
 export const DELETE_GUEST = 'DELETE_GUEST';
 export const EDIT_GUEST = 'EDIT_GUEST';
 export const CHECK_GUEST = 'CHECK_GUEST';
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 
 
-export function addGuest(name) {
+export const addGuest = (name) => {
     let guest = {
         id: generateId(name),
-        name: name,
+        name,
         isChecked: false
     };
     addGuestService(guest);
     return addGuestAction(guest);
-}
-export function deleteGuest(guest) {
+};
+export const deleteGuest = (guest) => {
     deleteGuestService(guest);
     return deleteGuestAction(guest);
-}
+};
 
-export function editGuest(guest) {
+export const editGuest = (guest) => {
     if (guest.name) {
         editGuestService(guest);
         return editGuestAction(guest);
     }
     return deleteGuest(guest);
-}
+};
 
-export function checkGuest(id) {
+export const checkGuest = (id) => {
     checkGuestService(id);
     return checkGuestAction(id);
-}
+};
 
 export function getGuests() {
     return (dispatch) => {
@@ -68,19 +67,6 @@ export function deleteGuestAction(guest) {
 export function checkGuestAction(id) {
     return {type: CHECK_GUEST, id}
 }
-
-export function setVisibilityFilter(item) {
-    return {
-        type: SET_VISIBILITY_FILTER,
-        item
-    }
-};
-
-export const VisibilityFilters = {
-    SHOW_ALL: 'SHOW_ALL',
-    SHOW_TWO: 'SHOW_TWO',
-    SHOW_ONE: 'SHOW_ONE'
-};
 
 function generateId(name) {
     return name + Math.random().toString(16).slice(2)

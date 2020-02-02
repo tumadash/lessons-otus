@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {ButtonGroup} from 'react-native-elements';
-import {setVisibilityFilter, VisibilityFilters} from "../store/list/actions";
+import {setVisibilityFilter, VisibilityFilters} from "../store/filter/actions";
 
 const FilterGuest = ({list, setVisibilityFilter}) => {
     const [selectedIndex, updateIndex] = useState(0);
@@ -16,13 +16,13 @@ const FilterGuest = ({list, setVisibilityFilter}) => {
     function click(selectedIndex) {
         switch (selectedIndex) {
             case 0:
-                setVisibilityFilter({filter:VisibilityFilters.SHOW_ALL, list});
+                setVisibilityFilter({filter: VisibilityFilters.SHOW_ALL, list});
                 break;
             case 1:
-                setVisibilityFilter({filter:VisibilityFilters.SHOW_TWO, list});
+                setVisibilityFilter({filter: VisibilityFilters.SHOW_TWO, list});
                 break;
             case 2:
-                setVisibilityFilter({filter:VisibilityFilters.SHOW_ONE, list});
+                setVisibilityFilter({filter: VisibilityFilters.SHOW_ONE, list});
                 break;
         }
         updateIndex(selectedIndex)

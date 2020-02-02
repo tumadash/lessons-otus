@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {Button} from 'react-native-elements';
