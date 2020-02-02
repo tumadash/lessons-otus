@@ -4,6 +4,7 @@ import {list} from './list/reducers'
 import {visibilityFilter} from './filter/reducers'
 import AsyncStorage from '@react-native-community/async-storage';
 import {persistReducer, persistStore} from 'redux-persist';
+import {user} from "./user/reducers";
 
 const persistConfig = {
     key: 'root',
@@ -17,6 +18,7 @@ const composedEnhancers = compose(
 const listApp = combineReducers({
     list,
     visibilityFilter,
+    user
 });
 
 const persistedReducer = persistReducer(persistConfig, listApp);

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, SafeAreaView, ScrollView, View,} from 'react-native';
+import {KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, View,} from 'react-native';
 import {Button, Icon} from 'react-native-elements';
-import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {editGuest} from "./store/list/actions";
-import {TextInputGuest, Title} from "./components";
+import {TextInputGuest, Title} from "../components";
+import {editGuest} from "../store/list/actions";
+
 
 const AboutScreen = ({navigation, list, editGuest}) => {
     const id = navigation.getParam('id');
@@ -16,6 +16,9 @@ const AboutScreen = ({navigation, list, editGuest}) => {
         const {name, id, isChecked} = guest;
         editGuest({name, id, isChecked, about: aboutText});
     };
+    const goMain = () => {
+        navigation.navigate('Main');
+    };
     return (
         <SafeAreaView>
             <KeyboardAvoidingView behavior="position">
@@ -26,9 +29,7 @@ const AboutScreen = ({navigation, list, editGuest}) => {
                             buttonStyle={styles.guestButton}
                             icon={<Icon name="arrow-back" color="white"/>}
                             title="Назад"
-                            onPress={() => {
-                                navigation.navigate('Main');
-                            }}
+                            onPress={goMain}
                         />
                         <TextInputGuest
                             value={aboutText}
