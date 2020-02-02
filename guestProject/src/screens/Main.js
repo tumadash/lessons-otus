@@ -1,10 +1,10 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
 import styled from 'styled-components';
-import {AddGuest, FilterGuest, ListGuest} from "./containers";
+import {AddGuest, FilterGuest, ListGuest, AvatarGuest} from "../containers";
 import {connect} from "react-redux";
-import {VisibilityFilters} from "./store/filter/actions";
-import Title from "./components/Title";
+import {VisibilityFilters} from "../store/filter/actions";
+import Title from "../components/Title";
 
 
 const CountGuest = styled.Text`
@@ -33,8 +33,12 @@ const MainScreen = ({navigation, allGuests}) => {
     const toAbout = (guest) => {
         navigation.navigate('About', {id: guest.id});
     };
+    const toProfile = () => {
+        navigation.navigate('Profile');
+    };
     return <SafeAreaView>
         <Title>Гости</Title>
+        <AvatarGuest toProfile={toProfile}/>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
         <FilterGuest/>
