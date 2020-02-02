@@ -6,14 +6,13 @@ import {checkGuest, deleteGuest, editGuest, getGuests} from "../store/list/actio
 import {VisibilityFilters} from "../store/filter/actions";
 
 
-const renderListGuestItem = (item, list, editGuest, deleteGuest, checkGuest, onSelect, selected) => {
-    return <Item editGuest={editGuest} deleteGuest={deleteGuest} item={item}
-                 selected={selected}
-                 onSelect={onSelect}
-                 checkGuest={checkGuest}/>
-};
+const renderListGuestItem = (toAbout, item, list, editGuest, deleteGuest, checkGuest, onSelect, selected) =>
+    <Item toAbout={toAbout} editGuest={editGuest} deleteGuest={deleteGuest} item={item}
+          selected={selected}
+          onSelect={onSelect}
+          checkGuest={checkGuest}/>;
 
-const ListGuest = ({list, editGuest, deleteGuest, checkGuest, getGuests}) => {
+const ListGuest = ({toAbout, list, editGuest, deleteGuest, checkGuest, getGuests}) => {
     const [selected, setSelected] = React.useState();
     const onSelect = React.useCallback(
         id => {
@@ -28,7 +27,7 @@ const ListGuest = ({list, editGuest, deleteGuest, checkGuest, getGuests}) => {
     return (<SafeAreaView style={{flex: 1}}>
         <FlatList
             data={list}
-            renderItem={({item}) => renderListGuestItem(item, list, editGuest, deleteGuest, checkGuest, onSelect, selected)}
+            renderItem={({item}) => renderListGuestItem(toAbout, item, list, editGuest, deleteGuest, checkGuest, onSelect, selected)}
             keyExtractor={item => item.id}
         />
     </SafeAreaView>);
@@ -53,7 +52,7 @@ const getVisibleGuest = (list, filter) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    editGuest: id => dispatch(editGuest(id)),
+    editGuest: guest => dispatch(editGuest(guest)),
     deleteGuest: id => dispatch(deleteGuest(id)),
     checkGuest: id => dispatch(checkGuest(id)),
     getGuests: () => dispatch(getGuests()),

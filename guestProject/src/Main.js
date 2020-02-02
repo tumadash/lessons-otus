@@ -4,13 +4,9 @@ import styled from 'styled-components';
 import {AddGuest, FilterGuest, ListGuest} from "./containers";
 import {connect} from "react-redux";
 import {VisibilityFilters} from "./store/filter/actions";
+import Title from "./components/Title";
 
-const Title = styled.Text`
-  color: white;
-  textAlign: center;
-  fontSize: 48;
-  margin-bottom: 15
-`;
+
 const CountGuest = styled.Text`
   color: white;
   textAlign: center;
@@ -33,15 +29,18 @@ function calcAllGuest(filter, list) {
     }
 }
 
-const MainScreen = ({allGuests}) => (
-    <SafeAreaView>
+const MainScreen = ({navigation, allGuests}) => {
+    const toAbout = (guest) => {
+        navigation.navigate('About', {id: guest.id});
+    };
+    return <SafeAreaView>
         <Title>Гости</Title>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
         <FilterGuest/>
-        <ListGuest/>
+        <ListGuest toAbout={toAbout}/>
     </SafeAreaView>
-);
+};
 
 const mapStateToProps = state => ({
     allGuests: calcAllGuest(state.visibilityFilter, state.list)

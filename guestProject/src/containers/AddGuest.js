@@ -3,7 +3,7 @@ import {SafeAreaView} from 'react-native';
 import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {addGuest} from '../store/list/actions'
-import TextInputGuest from '../components/TextInputGuest'
+import {TextInputGuest} from '../components'
 
 const AddGuest = ({dispatch}) => {
     const [text, setText] = useState();
@@ -11,9 +11,8 @@ const AddGuest = ({dispatch}) => {
     return (<SafeAreaView>
         <TextInputGuest placeholder="Введите имя гостя"
                         onChangeText={setText} value={text}
-        ></TextInputGuest>
-        <Button disabled={!text} title={'Добавить'} onPress={add}></Button>
-
+        />
+        <Button disabled={!text} title={'Добавить'} onPress={add}/>
     </SafeAreaView>);
 
     function add() {

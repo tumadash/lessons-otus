@@ -1,22 +1,29 @@
 import React from 'react';
 import {CheckBox, Icon} from 'react-native-elements';
 
-export default RightButtons = ({deleteGuest, id, isChecked, checkGuest}) => {
+export default RightButtons = ({toAbout, deleteGuest, guest, checkGuest}) => {
     return (
         <>
             <CheckBox
-                center
-                checked={isChecked}
+                checked={guest.isChecked}
                 onPress={() => {
-                    checkGuest(id);
+                    checkGuest(guest.id);
                 }}
             />
             <Icon onPress={() => {
-                deleteGuest({id, isChecked});
+                toAbout(guest);
+            }} center
+                  name='pencil'
+                  type="evilicon"
+                  size={36}
+                  color='#ef3900'/>
+            <Icon onPress={() => {
+                deleteGuest(guest);
             }}
-                name='close'
-                type="evilicon"
-                color='#ef3900'></Icon>
-                </>);
+                  name='close'
+                  size={36}
+                  type="evilicon"
+                  color='#ef3900'/>
+        </>);
 
-            };
+};
