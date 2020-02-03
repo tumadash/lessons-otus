@@ -14,6 +14,12 @@ const CountGuest = styled.Text`
   margin: 15px
 `;
 
+const setTestId = (id) => {
+    return Platform.OS === 'android' ?
+        { accessibilityLabel: id } :
+        { testID: id }
+};
+
 function calcAllGuest(filter, list) {
     switch (filter) {
         case VisibilityFilters.SHOW_TWO:
@@ -37,7 +43,7 @@ const MainScreen = ({navigation, allGuests}) => {
         navigation.navigate('Profile');
     };
     return <SafeAreaView>
-        <Title>Гости</Title>
+        <Title  {...setTestId('titleText')}>Гости</Title>
         <AvatarGuest toProfile={toProfile}/>
         <AddGuest/>
         <CountGuest>Количество гостей: {allGuests}</CountGuest>
