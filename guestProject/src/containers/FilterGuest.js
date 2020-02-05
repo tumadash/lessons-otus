@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {ButtonGroup} from 'react-native-elements';
 import {setVisibilityFilter, VisibilityFilters} from "../store/filter/actions";
+import {setTestId} from "../service/test-util";
 
 const FilterGuest = ({list, setVisibilityFilter}) => {
     const [selectedIndex, updateIndex] = useState(0);

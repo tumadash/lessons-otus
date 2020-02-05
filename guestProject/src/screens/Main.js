@@ -5,6 +5,7 @@ import {AddGuest, FilterGuest, ListGuest, AvatarGuest} from "../containers";
 import {connect} from "react-redux";
 import {VisibilityFilters} from "../store/filter/actions";
 import Title from "../components/Title";
+import {setTestId} from "../service/test-util";
 
 
 const CountGuest = styled.Text`
@@ -13,12 +14,6 @@ const CountGuest = styled.Text`
   fontSize: 18;
   margin: 15px
 `;
-
-const setTestId = (id) => {
-    return Platform.OS === 'android' ?
-        { accessibilityLabel: id } :
-        { testID: id }
-};
 
 function calcAllGuest(filter, list) {
     switch (filter) {
@@ -46,7 +41,7 @@ const MainScreen = ({navigation, allGuests}) => {
         <Title  {...setTestId('titleText')}>Гости</Title>
         <AvatarGuest toProfile={toProfile}/>
         <AddGuest/>
-        <CountGuest>Количество гостей: {allGuests}</CountGuest>
+        <CountGuest {...setTestId('countGuest')}>Количество гостей: {allGuests}</CountGuest>
         <FilterGuest/>
         <ListGuest toAbout={toAbout}/>
     </SafeAreaView>

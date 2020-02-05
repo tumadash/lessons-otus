@@ -1,10 +1,12 @@
 import React from 'react';
 import {CheckBox, Icon} from 'react-native-elements';
+import {setTestId} from "../service/test-util";
 
 export default RightButtons = ({toAbout, deleteGuest, guest, checkGuest}) => {
     return (
         <>
             <CheckBox
+                {...setTestId(guest.name + 'Check')}
                 checked={guest.isChecked}
                 onPress={() => {
                     checkGuest(guest.id);

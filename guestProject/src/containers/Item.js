@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {RightButtons, TextInputGuest} from '../components'
 import {ListItem} from 'react-native-elements';
 import {Animated, StyleSheet} from 'react-native';
+import {setTestId} from "../service/test-util";
 
 export const Item = ({toAbout, editGuest, deleteGuest, item, selected, onSelect, checkGuest}) => {
     const {name, id, isChecked} = item;
@@ -19,11 +20,11 @@ export const Item = ({toAbout, editGuest, deleteGuest, item, selected, onSelect,
     };
     return (<Animated.View style={{opacity: opacity}}>
             {selected === id ?
-                <TextInputGuest placeholder="Введите имя гостя"
+                <TextInputGuest {...setTestId(name + 'Input')} placeholder="Введите имя гостя"
                                 onChangeText={setText}
                                 value={text}
                                 onBlur={save}
-                /> : <ListItem titleStyle={styles.inputItem}
+                /> : <ListItem  {...setTestId(name)} titleStyle={styles.inputItem}
                                key={id}
                                title={name}
                                bottomDivider
