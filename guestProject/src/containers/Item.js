@@ -24,7 +24,7 @@ export const Item = ({toAbout, editGuest, deleteGuest, item, selected, onSelect,
                                 onChangeText={setText}
                                 value={text}
                                 onBlur={save}
-                /> : <ListItem  {...setTestId(name)} titleStyle={styles.inputItem}
+                /> : <ListItem  titleProps={{...setTestId(name)}} titleStyle={styles.inputItem}
                                key={id}
                                title={name}
                                bottomDivider
