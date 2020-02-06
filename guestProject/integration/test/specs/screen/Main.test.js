@@ -1,6 +1,6 @@
 const text1 = 'guest1';
 const text2 = 'guest2';
-
+let guestName = text1;
 describe('RNDeviceFarm Device Test', () => {
     it('Title text', () => {
         $('~titleText').waitForDisplayed(10000);
@@ -9,7 +9,6 @@ describe('RNDeviceFarm Device Test', () => {
     });
 
     it('Add guest', () => {
-        $('~titleText').waitForDisplayed(10000);
         const inputGuest = $("~inputText");
         const addGuest = $("~addGuest");
 
@@ -17,26 +16,25 @@ describe('RNDeviceFarm Device Test', () => {
         inputGuest.addValue('guest1');
         addGuest.click();
         addGuest.click();
-        expect($("~guest1").getText()).toBe(text1)
+        expect($('~' + guestName).getText()).toBe(text1)
     });
 
     it('Edit guest', () => {
-        $('~titleText').waitForDisplayed(10000);
         const guestElement = $("~guest1");
         guestElement.touchAction("longPress");
         const guestInputElement = $("~guest1Input");
+        guestInputElement.click();
         guestInputElement.addValue('guest2');
+        guestName = 'guest2';
         const title = $("~titleText");
         title.touchAction("tap");
         title.touchAction("tap");
-        expect($("~guest1").getText()).toBe(text2)
+        expect($('~' + guestName).getText()).toBe(text2)
     });
 
     it('Check guest', () => {
-        $('~titleText').waitForDisplayed(10000);
         //проверим, что сейчас один гость
         expect($("~countGuest").getText()).toBe("Количество гостей: 1");
-        const countGuest = $("~countGuest");
 
         // //перейдем на вкладку "С парой"
         // $('~titleText').touchAction("tap");
@@ -46,9 +44,9 @@ describe('RNDeviceFarm Device Test', () => {
         // $('~titleText').touchAction("tap");
         // $('~guest1').waitForExist(); //элемент есть
 
+        $(`~${guestName}Check`).touchAction("tap");
+        $(`~${guestName}Check`).waitForClickable({ timeout: 3000 });
 
-        const guestCheckElement = $("~guest1Check");
-        guestCheckElement.touchAction("tap");
 
         expect($("~countGuest").getText()).toBe("Количество гостей: 2");
 
@@ -62,12 +60,11 @@ describe('RNDeviceFarm Device Test', () => {
     });
 
     it('Delete guest', () => {
-        $('~titleText').waitForDisplayed(10000);
         //проверим, что сейчас один гость
-        expect($("~countGuest").getText()).toBe("Количество гостей: 1");
-        $('~guest1').waitForExist(); //элемент есть
-        $('~guest1Delete').touchAction("tap");
-        $('~guest1').waitForExist(undefined, true); //элемента нет
+        expect($("~countGuest").getText()).toBe("Количество гостей: 2");
+        $(`~${guestName}`).waitForExist(); //элемент есть
+        $(`~${guestName}Delete`).touchAction("tap");
+        $(`~${guestName}`).waitForExist(undefined, true); //элемента нет
         //проверим, что сейчас нет гостей
         expect($("~countGuest").getText()).toBe("Количество гостей: 0");
     });

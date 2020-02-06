@@ -22,6 +22,7 @@ export default RightButtons = ({toAbout, deleteGuest, guest, checkGuest}) => {
             <Icon onPress={() => {
                 deleteGuest(guest);
             }}
+                  {...setTestId(guest.name + 'Delete')}
                   name='close'
                   size={36}
                   type="evilicon"
