@@ -36,27 +36,27 @@ describe('RNDeviceFarm Device Test', () => {
         //проверим, что сейчас один гость
         expect($("~countGuest").getText()).toBe("Количество гостей: 1");
 
-        // //перейдем на вкладку "С парой"
-        // $('~titleText').touchAction("tap");
-        // $('~guest1').waitForExist(undefined, true); //элемента нет
-        //
-        // //перейдем на вкладку "Без пары"
-        // $('~titleText').touchAction("tap");
-        // $('~guest1').waitForExist(); //элемент есть
+        //перейдем на вкладку "С парой"
+        $('~withPartnerButton').touchAction("tap");
+        $(`~${guestName}`).waitForExist(undefined, true); //элемента нет
 
+        //перейдем на вкладку "Без пары"
+        $('~withoutPartnerButton').touchAction("tap");
+        $(`~${guestName}`).waitForExist(); //элемент есть
+
+        $('~allButton').touchAction("tap");
         $(`~${guestName}Check`).touchAction("tap");
-
         browser.waitUntil(() => {
             return $("~countGuest").getText() === "Количество гостей: 2";
         }, 5000)
 
-        // //перейдем на вкладку "Без пары"
-        // $('~').touchAction("tap");
-        // $('~guest1').waitForExist(undefined, true); //элемента нет
-        //
-        // //перейдем на вкладку "С парой"
-        // $('~').touchAction("tap");
-        // $('~guest1').waitForExist(); //элемент есть
+        //перейдем на вкладку "Без пары"
+        $('~withoutPartnerButton').touchAction("tap");
+        $(`~${guestName}`).waitForExist(undefined, true); //элемента нет
+
+        //перейдем на вкладку "С парой"
+        $('~withPartnerButton').touchAction("tap");
+        $(`~${guestName}`).waitForExist(); //элемент есть
 
     });
 
