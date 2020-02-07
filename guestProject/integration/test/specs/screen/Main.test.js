@@ -45,10 +45,10 @@ describe('RNDeviceFarm Device Test', () => {
         // $('~guest1').waitForExist(); //элемент есть
 
         $(`~${guestName}Check`).touchAction("tap");
-        $(`~${guestName}Check`).waitForClickable({ timeout: 3000 });
 
-
-        expect($("~countGuest").getText()).toBe("Количество гостей: 2");
+        browser.waitUntil(() => {
+            return $("~countGuest").getText() === "Количество гостей: 2";
+        }, 5000)
 
         // //перейдем на вкладку "Без пары"
         // $('~').touchAction("tap");
@@ -57,11 +57,10 @@ describe('RNDeviceFarm Device Test', () => {
         // //перейдем на вкладку "С парой"
         // $('~').touchAction("tap");
         // $('~guest1').waitForExist(); //элемент есть
+
     });
 
     it('Delete guest', () => {
-        //проверим, что сейчас один гость
-        expect($("~countGuest").getText()).toBe("Количество гостей: 2");
         $(`~${guestName}`).waitForExist(); //элемент есть
         $(`~${guestName}Delete`).touchAction("tap");
         $(`~${guestName}`).waitForExist(undefined, true); //элемента нет

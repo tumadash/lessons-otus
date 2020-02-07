@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "npm install && npx npm-bundle && zip -r integration-tests.zip *.tgz && rm *.tgz",
     "test:android:local": "npx wdio ./wdio.android.local.conf.js",
-    "test:android": "npx wdio ./wdio.android.conf.js",
+    "test:android": "npx wdio ./wdio.conf.android.local.js",
     "test:ios:local": "npx wdio ./wdio.ios.local.conf.js",
     "test:ios": "npx wdio ./wdio.ios.conf.js"
   },
