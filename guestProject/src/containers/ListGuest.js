@@ -16,7 +16,6 @@ const ListGuest = ({toAbout, list, editGuest, deleteGuest, checkGuest, getGuests
     const [selected, setSelected] = React.useState('null');
     const onSelect = React.useCallback(
         id => {
-            console.log(id);
             setSelected(id);
         }, [selected],
     );
