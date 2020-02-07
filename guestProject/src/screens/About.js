@@ -4,6 +4,7 @@ import {Button, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {TextInputGuest, Title} from "../components";
 import {editGuest} from "../store/list/actions";
+import {setTestId} from "../service/test-util";
 
 
 const AboutScreen = ({navigation, list, editGuest}) => {
@@ -24,14 +25,16 @@ const AboutScreen = ({navigation, list, editGuest}) => {
             <KeyboardAvoidingView behavior="position">
                 <ScrollView keyboardShouldPersistTaps="always">
                     <View>
-                        <Title>Гость: {guest.name}</Title>
+                        <Title {...setTestId('aboutGuest')}>Гость: {guest.name}</Title>
                         <Button
+                            {...setTestId('commentButton')}
                             buttonStyle={styles.guestButton}
                             icon={<Icon name="arrow-back" color="white"/>}
                             title="Назад"
                             onPress={goMain}
                         />
                         <TextInputGuest
+                            {...setTestId('commentField')}
                             value={aboutText}
                             onChangeText={setAboutText}
                             placeholder="Комментарий"

@@ -14,7 +14,9 @@ export default RightButtons = ({toAbout, deleteGuest, guest, checkGuest}) => {
             />
             <Icon onPress={() => {
                 toAbout(guest);
-            }} center
+            }}
+                  {...setTestId(guest.name + 'Edit')}
+                  center
                   name='pencil'
                   type="evilicon"
                   size={36}

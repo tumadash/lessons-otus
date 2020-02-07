@@ -1,9 +1,10 @@
 import React, {useCallback, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import ImagePickerLib from 'react-native-image-picker';
 import {Button, Card, Icon, Input} from 'react-native-elements';
 import {connect} from "react-redux";
 import {setName, setPhoto} from "../store/user/actions";
+import {setTestId} from "../service/test-util";
 
 const options = {
     title: 'Выберите фото...',
@@ -39,7 +40,7 @@ const ProfileScreen = ({navigation, user, setName, setPhoto}) => {
                 onPress={goMain}
             />
             <Card
-                title='Профиль'
+                title={<Text {...setTestId('profileTitle')}>'Профиль'</Text>}
                 image={image}>
                 <Input
                     onChangeText={setText}
