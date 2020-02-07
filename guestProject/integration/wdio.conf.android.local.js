@@ -9,7 +9,7 @@ config.capabilities = [{
   platformName: 'Android',
   deviceName: 'Android Emulator', // Needed to connect to emulator
   // Change the path below to find the .apk file
-  app: path.resolve(__dirname, '../android/app/build/outputs/apk/debug/app-debug.apk'),
+  app: path.resolve(__dirname, '../android/app/build/outputs/apk/release/app-release.apk'),
   automationName: 'UiAutomator2',
 }];
 
