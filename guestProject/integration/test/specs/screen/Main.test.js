@@ -1,7 +1,7 @@
 const text1 = 'guest1';
 const text2 = 'guest2';
 let guestName = text1;
-describe('RNDeviceFarm Device Test', () => {
+describe('Run Main Test', () => {
     it('Title text', () => {
         $('~titleText').waitForDisplayed(10000);
         const title = $("~titleText");

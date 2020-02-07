@@ -1,4 +1,4 @@
-describe('RNDeviceFarm Device Test', () => {
+describe('Run Profile Test', () => {
     it('To Profile', () => {
         $('~titleText').waitForDisplayed(10000);
         $('~toProfile').touchAction('tap');

@@ -1,6 +1,6 @@
 const text1 = 'guest1';
 let guestName = text1;
-describe('RNDeviceFarm Device Test', () => {
+describe('Run About Test', () => {
     beforeAll(() => {
         $('~titleText').waitForDisplayed(10000);
         const inputGuest = $("~inputText");
