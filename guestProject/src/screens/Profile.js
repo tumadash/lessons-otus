@@ -34,15 +34,17 @@ const ProfileScreen = ({navigation, user, setName, setPhoto}) => {
     return (
         <>
             <Button
+                {...setTestId('backButton')}
                 buttonStyle={styles.guestButton}
                 icon={<Icon name="arrow-back" color="white"/>}
                 title="Назад"
                 onPress={goMain}
             />
             <Card
-                title={<Text {...setTestId('profileTitle')}>'Профиль'</Text>}
+                title={<Text {...setTestId('profileTitle')}>Профиль</Text>}
                 image={image}>
                 <Input
+                    {...setTestId('nameInput')}
                     onChangeText={setText}
                     value={text}
                     placeholder='Введите имя пользователя'

@@ -18,11 +18,11 @@ describe('RNDeviceFarm Device Test', () => {
     });
     it('Set comment', () => {
         //добавили комментарий
-        $(`~ commentField`).touchAction("tap");
-        $(`~ commentField`).addValue('comment');
+        $(`~commentField`).touchAction("tap");
+        $(`~commentField`).addValue('comment');
         //Назад
-        $(`~ commentButton`).touchAction("tap");
-        $(`~ commentButton`).touchAction("tap");
+        $(`~backButton`).touchAction("tap");
+        $(`~backButton`).touchAction("tap");
         //опять вернулись
         $(`~${guestName}Edit`).touchAction("tap");
         expect($('~commentField').getText()).toBe(`comment`); //коммент на месте

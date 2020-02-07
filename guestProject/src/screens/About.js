@@ -27,7 +27,7 @@ const AboutScreen = ({navigation, list, editGuest}) => {
                     <View>
                         <Title {...setTestId('aboutGuest')}>Гость: {guest.name}</Title>
                         <Button
-                            {...setTestId('commentButton')}
+                            {...setTestId('backButton')}
                             buttonStyle={styles.guestButton}
                             icon={<Icon name="arrow-back" color="white"/>}
                             title="Назад"
