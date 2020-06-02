@@ -2,14 +2,14 @@ import * as React from "react";
 
 export interface PanelProps {
     info: { temperature: string, humidity: string, precipitation: string },
-    city: string
+    nameCity: string
 }
 
 export class Panel extends React.Component<PanelProps, {}> {
     render() {
         return <div className="weather-panel">
             <div>
-                Город: {this.props.city}
+                Город: {this.props.nameCity}
             </div>
             <div>
                 Температура: {this.props.info.temperature}
