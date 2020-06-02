@@ -2,10 +2,15 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {ButtonGroup} from 'react-native-elements';
 import {setVisibilityFilter, VisibilityFilters} from "../store/filter/actions";
+import {setTestId} from "../service/test-util";
+import {Text} from "react-native";
 
 const FilterGuest = ({list, setVisibilityFilter}) => {
     const [selectedIndex, updateIndex] = useState(0);
-    const buttons = ['Все', 'С парой', 'Без пары'];
+    const component1 = () => <Text {...setTestId('allButton')}>Все</Text>;
+    const component2 = () =><Text {...setTestId('withPartnerButton')}>С парой</Text>;
+    const component3 = () =><Text {...setTestId('withoutPartnerButton')}>Без пары</Text>;
+    const buttons = [{element: component1}, {element: component2}, {element: component3}];
     return (
         <ButtonGroup
             onPress={click}
